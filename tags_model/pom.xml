@@ -48,7 +48,7 @@
         <hive.version>1.1.0-cdh5.14.0</hive.version>
         <oozie.version>4.1.0-cdh5.14.0</oozie.version>
         <hbase.version>1.2.0-cdh5.14.0</hbase.version>
-        <solr.version>4.10.3-cdh5.14.0</solr.version>
+        <solr.version>8.3.1</solr.version>
         <jsch.version>0.1.53</jsch.version>
         <jackson.spark.version>2.6.5</jackson.spark.version>
         <mysql.version>5.1.46</mysql.version>
