@@ -1,0 +1,12 @@
+[
+    {"id":1,"name":"性别","status":true,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的性别"},
+    {"id":2,"name":"年龄段","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的年龄段"},
+    {"id":3,"name":"身高","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的身高"},
+    {"id":4,"name":"民族","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的民族"},
+    {"id":5,"name":"籍贯","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的籍贯"},
+    {"id":6,"name":"政治面貌","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的政治面貌"},
+    {"id":7,"name":"职业","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的职业"},
+    {"id":8,"name":"婚姻状况","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的婚姻状况"},
+    {"id":9,"name":"学历","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的学历"},
+    {"id":10,"name":"就业状况","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的就业状况"}
+]

@@ -6,9 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="tags-up_2.11" />
+        <module name="tags-web" />
         <module name="tags-oozie" />
         <module name="tags-etl" />
+        <module name="tags_model" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="tags-web" options="-parameters" />
+    </option>
   </component>
 </project>

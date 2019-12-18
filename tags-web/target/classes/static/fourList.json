@@ -1,0 +1,13 @@
+{
+    "title":{"id":5,"name":"籍贯","status":false,"dateRange":"每天#2019-01-01 23:58:01","info":"注册会员的籍贯"},
+    "datas":[
+                {"id":1,"name":"北京","info":"注册会员的籍贯","num":23,"desc":"","rule":""},
+                {"id":2,"name":"上海","info":"注册会员的籍贯","num":34,"desc":"","rule":""},
+                {"id":3,"name":"广州","info":"注册会员的籍贯","num":12,"desc":"","rule":""},
+                {"id":4,"name":"深圳","info":"注册会员的籍贯","num":21,"desc":"","rule":""},
+                {"id":5,"name":"杭州","info":"注册会员的籍贯","num":23,"desc":"","rule":""},
+                {"id":6,"name":"苏州","info":"注册会员的籍贯","num":43,"desc":"","rule":""},
+                {"id":7,"name":"郑州","info":"注册会员的籍贯","num":54,"desc":"","rule":""},
+                {"id":8,"name":"西安","info":"注册会员的籍贯","num":55,"desc":"","rule":""}
+    ]
+}

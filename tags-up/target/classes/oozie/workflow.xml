@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="tag_model_workflow">
+    <start to="tag_model"/>
+    <action name="tag_model">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>oozie.action.sharelib.for.spark</name>
+                    <value>spark2</value>
+                </property>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <master>${master}</master>
+            <mode>${mode}</mode>
+            <name>${appName}</name>
+            <class>${mainClass}</class>
+            <jar>${jarPath}</jar>
+            <spark-opts>${sparkOptions}</spark-opts>
+        </spark>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Workflow failed, error message [${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

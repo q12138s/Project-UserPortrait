@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<coordinator-app xmlns="uri:oozie:coordinator:0.4" name="tag_model_coordinator" frequency="${freq}" start="${start}" end="${end}" timezone="Asia/Shanghai">
+    <action>
+        <workflow>
+            <app-path>${appPath}</app-path>
+        </workflow>
+    </action>
+</coordinator-app>
