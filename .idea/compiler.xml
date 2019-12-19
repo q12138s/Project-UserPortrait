@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tags-up_2.11" />
-        <module name="tags-web" />
         <module name="tags-oozie" />
+        <module name="tags-up_2.11" />
         <module name="tags-etl" />
+        <module name="tags_model_2.11" />
         <module name="tags_model" />
+        <module name="tags-web" />
       </profile>
     </annotationProcessing>
   </component>
