@@ -1,4 +1,5 @@
 package cn.itcast.tags.tools
+import cn.itcast.tags.models.ModelConfig
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.{udf, when}
 import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
@@ -19,6 +20,7 @@ object ProfileTools {
 //      )
 //      profileDF
       import cn.itcast.tags.spark.hbase._
+      /*
       spark.read
 //        .format("cn.itcast.tags.spark.hbase")
         .option("zkHosts", "bigdata-cdh01.itcast.cn")
@@ -26,6 +28,16 @@ object ProfileTools {
         .option("hbaseTable", "tbl_profile")
         .option("family", "user")
         .option("selectFields", "userId,tagIds")
+//        .load()
+        .hbase
+       */
+      spark.read
+//        .format("cn.itcast.tags.spark.hbase")
+        .option("zkHosts", ModelConfig.PROFILE_TABLE_ZK_HOSTS)
+        .option("zkPort", ModelConfig.PROFILE_TABLE_ZK_PORT)
+        .option("hbaseTable", ModelConfig.PROFILE_TABLE_NAME)
+        .option("family", ModelConfig.PROFILE_TABLE_FAMILY_USER)
+        .option("selectFields", ModelConfig.PROFILE_TABLE_SELECT_FIELDS)
 //        .load()
         .hbase
     }
@@ -40,6 +52,7 @@ object ProfileTools {
 //      "tbl_profile", "user", "userId"
 //    )
     import cn.itcast.tags.spark.hbase._
+    /*
     profileDF.write
       .mode(SaveMode.Overwrite)
 //      .format("cn.itcast.tags.spark.hbase")
@@ -48,6 +61,17 @@ object ProfileTools {
       .option("hbaseTable", "tbl_profile")
       .option("family", "user")
       .option("rowKeyColumn", "userId")
+//      .save()
+      .hbase
+     */
+    profileDF.write
+      .mode(SaveMode.Overwrite)
+//      .format("cn.itcast.tags.spark.hbase")
+      .option("zkHosts", ModelConfig.PROFILE_TABLE_ZK_HOSTS)
+      .option("zkPort", ModelConfig.PROFILE_TABLE_ZK_PORT)
+      .option("hbaseTable", ModelConfig.PROFILE_TABLE_NAME)
+      .option("family", ModelConfig.PROFILE_TABLE_FAMILY_USER)
+      .option("rowKeyColumn", ModelConfig.PROFILE_TABLE_ROWKEY_COL)
 //      .save()
       .hbase
   }

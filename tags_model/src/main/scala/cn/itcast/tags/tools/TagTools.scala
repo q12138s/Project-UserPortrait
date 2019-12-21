@@ -52,4 +52,42 @@ object TagTools {
     modelDF
   }
 
+  /**
+   * 将属性标签中规则rule拆分为范围（start，end）
+   * @param ruleTagDF
+   * @return
+   */
+  def convertTuple(ruleTagDF: DataFrame): DataFrame = {
+    // 导入隐式转换和函数库
+    import org.apache.spark.sql.functions._
+    import ruleTagDF.sparkSession.implicits._
+    // 1. 自定UDF函数，解析分解属性标签的规则rule： 19500101-19591231
+    val rule_to_tuple: UserDefinedFunction = udf(
+      (rule: String) => {
+        val Array(start, end) = rule.split("-").map(_.toInt)
+        // 返回二元组
+        (start, end)
+      }
+    )
+
+    // 2. 获取属性标签数据，解析规则rule
+    val ruleDF: DataFrame = ruleTagDF
+      .filter($"level" === 5) // 5级标签
+      .select(
+        $"id".as("tagId"), //
+        rule_to_tuple($"rule").as("rules") //
+      )
+      // 获取起始start和结束end
+      .select(
+        $"tagId", //
+        $"rules._1".as("start"), //
+        $"rules._2".as("end") //
+      )
+    //ruleDF.show(20, truncate = false)
+
+    // 3. 返回标签规则
+    ruleDF
+
+  }
+
 }

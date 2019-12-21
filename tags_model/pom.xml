@@ -65,6 +65,12 @@
     </properties>
 
     <dependencies>
+        <!-- 导入加载配置文件的依赖-->
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+            <version>1.2.1</version>
+        </dependency>
         <!-- Scala -->
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -156,6 +162,17 @@
                     <artifactId>jackson-xc</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- Spark SQL 与 Hive 集成 依赖 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive-thriftserver_2.11</artifactId>
+            <version>${spark.version}</version>
         </dependency>
         <!-- spark -->
         <dependency>
