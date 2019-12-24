@@ -1,13 +1,16 @@
 package cn.itcast.tags.models.ml
 
-import cn.itcast.tags.models.{AbstractModel, ModelType}
+import cn.itcast.tags.models.{AbstractModel, ModelConfig, ModelType}
 import cn.itcast.tags.tools.TagTools
+import cn.itcast.tags.utils.HdfsUtils
+import org.apache.hadoop.conf.Configuration
 import org.apache.spark.broadcast.Broadcast
 import org.apache.spark.ml.clustering.{KMeans, KMeansModel}
 import org.apache.spark.ml.feature.{MinMaxScaler, MinMaxScalerModel, VectorAssembler}
 import org.apache.spark.ml.linalg
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.{Column, DataFrame}
+import org.apache.spark.storage.StorageLevel
 
 /**
  * 标签模型开发，客户价值RFM模型
@@ -171,7 +174,8 @@ class RfmModel extends AbstractModel("客户价值RFM模型",ModelType.ML){
       .setOutputCol("scaledFeatures")
       .fit(dataframe)
     val scalarDF: DataFrame = scaler.transform(dataframe)
-
+    // 由于KMeans算法属于迭代算法，数据集被使用多次，所以缓存
+    scalarDF.persist(StorageLevel.MEMORY_AND_DISK_SER)
     // 使用KMeans聚类
     val kmeans: KMeans = new KMeans()
       // 设置特征列名称
@@ -183,8 +187,8 @@ class RfmModel extends AbstractModel("客户价值RFM模型",ModelType.ML){
       .setInitMode("k-means||")// 表示KMeans算法如何初始化K的类簇点
       // 设置聚类列簇个数
       .setK(7)
-    val kmeansModel: KMeansModel = kmeans.fit(scalarDF)
-
+//    val kmeansModel: KMeansModel = kmeans.fit(scalarDF)
+    val kmeansModel: KMeansModel = loadModel(scalarDF)
     //模型评估指标WSSSE
     val wssse: Double = kmeansModel.computeCost(scalarDF)
 
@@ -194,6 +198,55 @@ class RfmModel extends AbstractModel("客户价值RFM模型",ModelType.ML){
     // 返回预测的值
     (wssse,kmeansModel, predictionDF)
   }
+
+  /**
+   * 条咋恒算法超参数，获取最佳模型
+   * @param dataFrame
+   */
+  def trainBestModel(dataFrame: DataFrame): KMeansModel ={
+
+    //设置超参数的值
+    val maxIters: Array[Int] = Array(5,10,20)
+    //不同那个超参数的值，训练模型
+    val models: Array[(Double, KMeansModel, Int)] = maxIters.map {
+      maxIter =>
+        //使用KMeans算法应用数据训练模型
+        val KMeans: KMeans = new KMeans()
+          .setPredictionCol("prediction")
+          .setFeaturesCol("features")
+          .setK(7)
+          .setMaxIter(maxIter)
+          .setSeed(31)
+        //训练模型
+        val model: KMeansModel = KMeans.fit(dataFrame)
+        //模型评估指标
+        val wssse: Double = model.computeCost(dataFrame)
+        (wssse, model, maxIter)
+    }
+    //获取最佳模型：排序取最小
+    val (_,bestModel,_): (Double, KMeansModel, Int) = models.minBy(_._1)
+    bestModel
+  }
+
+
+  def loadModel(dataFrame: DataFrame):KMeansModel={
+    //模型保存路径
+    val modelPath: String = ModelConfig.MODEL_BASE_PATH+s"/${this.getClass.getSimpleName}"
+    //获取模型
+    val conf: Configuration = dataFrame.sparkSession.sparkContext.hadoopConfiguration
+    if (HdfsUtils.exists(conf,modelPath)){
+      logWarning(s"正在从【$modelPath】中加载数据---------------")
+      KMeansModel.load(modelPath)
+    }else{
+      //模型路径不存在，训练模型
+      logWarning(s"正在训练模型--------------------")
+      val model: KMeansModel = trainBestModel(dataFrame)
+      //保存模型
+      logWarning(s"正在保存模型【$modelPath】----------------------")
+      model
+    }
+  }
+
 }
 object RfmModel{
   def main(args: Array[String]): Unit = {
