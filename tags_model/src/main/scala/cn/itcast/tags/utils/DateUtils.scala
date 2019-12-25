@@ -18,7 +18,7 @@ object DateUtils {
     // 获取当前Calendar对象
     val today: Calendar = Calendar.getInstance()
     // 返回字符串
-    dateToString(today.getTime, FORMAT_ONE)
+    dateToString(today.getTime, LONG_DATE_FORMAT)
   }
   /**
    * 依据日期时间增加或减少多少天
@@ -28,14 +28,14 @@ object DateUtils {
    */
   def dateSub(dateStr: String, amount: Int): String = {
     // a. 将日期字符串转换为Date类型
-    val date: Date = stringToDate(dateStr, FORMAT_ONE)
+    val date: Date = stringToDate(dateStr, LONG_DATE_FORMAT)
     // b. 获取Calendar对象
     val calendar = Calendar.getInstance()
     calendar.setTime(date)
     // c. 设置天数（增加或减少）
     calendar.add(Calendar.DAY_OF_YEAR, amount)
     // d. 转换Date为字符串
-    dateToString(calendar.getTime, FORMAT_ONE)
+    dateToString(calendar.getTime, LONG_DATE_FORMAT)
   }
   /**
    * 把日期转换为字符串

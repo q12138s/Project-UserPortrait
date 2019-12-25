@@ -1,10 +1,10 @@
 package cn.itcast.tags.models.rule
 
-import cn.itcast.tags.models.{AbstractModel, ModelType}
+import cn.itcast.tags.models.{AbstractModel, AbstractTagModel, ModelType}
 import cn.itcast.tags.tools.TagTools
 import org.apache.spark.sql.DataFrame
 
-class JobTagModel extends AbstractModel("职业标签", ModelType.MATCH){
+class JobTagModel extends AbstractTagModel("职业标签", ModelType.MATCH){
   override def doTag(businessDF: DataFrame, tagDF: DataFrame): DataFrame = {
     // a. 使用业务字段：job与属性标签规则rule匹配，获取标签Id（tagId）
     val modelDF: DataFrame = TagTools.ruleMatchTag(businessDF, "job", tagDF)

@@ -37,6 +37,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
+
         <!-- 依赖Scala语言 -->
         <dependency>
             <groupId>org.scala-lang</groupId>
