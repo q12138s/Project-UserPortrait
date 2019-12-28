@@ -12,6 +12,7 @@
         <module>tags-etl</module>
         <module>tags-oozie</module>
         <module>tags_model</module>
+        <module>tags-index</module>
     </modules>
 
 

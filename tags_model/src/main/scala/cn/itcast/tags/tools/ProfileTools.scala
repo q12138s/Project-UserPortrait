@@ -104,4 +104,47 @@ object ProfileTools {
     newProfileDF
   }
 
+
+  /**
+   * 将每个标签模型计算用户标签与历史画像标签数据合并
+   * @param modelDF 标签数据，字段为uid和tagId
+   * @param profileDF 画像标签数据，字段为userId和tagIds
+   * @param ids 标签所有ID
+   * @return
+   */
+  def mergeProfileTags(modelDF: DataFrame, profileDF: DataFrame,
+                       ids: Set[Long]): DataFrame = {
+    import modelDF.sparkSession.implicits._
+    // a. 依据用户ID关联标签数据
+    val mergeDF: DataFrame = modelDF
+      // 按照模型数据中userId与画像数据中rowKey关联
+      .join(profileDF, modelDF("uid") === profileDF("userId"), "left")
+
+    // b. 自定义UDF函数，合并已有标签与计算标签
+    val merge_tags_udf = udf(
+      (tagId: Long, tagIds: String) => {
+        if(null != tagIds){
+          // i. // 画像标签Set集合
+          val tagIdsSet: Set[Long] = tagIds.split(",").map(_.toLong).toSet
+          // ii. 交集
+          val interset: Set[Long] = tagIdsSet & ids
+          // iii. 合并新标签
+          val newTagIds: Set[Long] = tagIdsSet -- interset + tagId
+          // iv. 返回标签
+          newTagIds.mkString(",")
+        }else{
+          tagId.toString
+        }
+      }
+    )
+    // c. 合并标签数据
+    val newProfileDF: DataFrame = mergeDF.select(
+      $"uid".as("userId"), //
+      merge_tags_udf($"tagId", $"tagIds").as("tagIds")//
+    )
+
+    // d. 返回标签画像数据
+    newProfileDF
+  }
+
 }

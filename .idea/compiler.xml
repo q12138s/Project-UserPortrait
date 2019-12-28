@@ -12,6 +12,7 @@
         <module name="tags_model_2.11" />
         <module name="tags_model" />
         <module name="tags-web" />
+        <module name="tags-index" />
       </profile>
     </annotationProcessing>
   </component>
