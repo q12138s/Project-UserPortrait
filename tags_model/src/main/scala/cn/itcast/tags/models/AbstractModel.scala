@@ -121,8 +121,9 @@ abstract class AbstractModel (modelName: String, modelType: ModelType) extends L
       //modelDF.show()
 
       // e. 合并标签与保存
-      mergeAndSaveTag(modelDF)
-
+      if (modelDF!=null) {
+        mergeAndSaveTag(modelDF)
+      }
 //      Thread.sleep(10000000)
 
       tagDF.unpersist()

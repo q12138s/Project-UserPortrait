@@ -11,7 +11,7 @@ public class AppTest {
 
 
         public static void main(String[] args) {
-            File file = new File("E:\\bigdata_project\\profile_day08[20191226]\\02_视频");
+            File file = new File("E:\\bigdata_project\\profile_day10[20191229]\\02_视频");
             if(file.isDirectory()){
                 File[] files = file.listFiles();
                 for (File file1 : files) {
