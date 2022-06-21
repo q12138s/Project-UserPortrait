@@ -51,7 +51,7 @@
         <solr.version>4.10.3-cdh5.14.0</solr.version>
         <jsch.version>0.1.53</jsch.version>
         <jackson.spark.version>2.6.5</jackson.spark.version>
-        <mysql.version>5.1.46</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
 
         <!-- maven plugins -->
         <mybatis-generator-maven-plugin.version>1.3.5</mybatis-generator-maven-plugin.version>
