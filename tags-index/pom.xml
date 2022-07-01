@@ -28,7 +28,7 @@
     </repositories>
 
     <properties>
-        <hadoop.version>2.6.0-cdh5.14.0</hadoop.version>
+        <hadoop.version>2.7.0</hadoop.version>
         <hbase.version>1.2.0-cdh5.14.0</hbase.version>
         <solr.version>4.10.3-cdh5.14.0</solr.version>
     </properties>
